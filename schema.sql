@@ -13,4 +13,6 @@ CREATE TABLE animals (
   weight_kg float
 );
 
+ALTER TABLE animals ADD species varchar(25);
+ALTER TABLE animals DROP COLUMN species;
 
