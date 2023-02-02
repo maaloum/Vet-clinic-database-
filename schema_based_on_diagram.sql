@@ -1,16 +1,8 @@
--- -----------------------------------------------------
--- Schema clinic
--- -----------------------------------------------------
 
--- -----------------------------------------------------
--- Schema clinic
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `clinic` DEFAULT CHARACTER SET utf8 ;
 USE `clinic` ;
 
--- -----------------------------------------------------
--- Table `clinic`.`Patients`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `clinic`.`Patients` (
   `id` INT GENERATED ALWAYS AS () VIRTUAL,
   `name` VARCHAR(45) NOT NULL,
@@ -77,19 +69,25 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `clinic`.`Invoice_items`
 -- -----------------------------------------------------
-
-CREATE TABLE invoice_items (
-    id SERIAL PRIMARY KEY,
-    unit_price DECIMAL,
-    quatity INT,
-    total_price DECIMAL,
-    invoice_id INT,
-    treatment_id INT,
-    CONSTRAINT fk_invoices FOREIGN KEY (invoice_id) REFERENCES invoices(id),
-    CONSTRAINT fk_treatments FOREIGN KEY (treatment_id) REFERENCES treatments(id)
-);
-
-CREATE INDEX ON invoice_items (invoice_id);
-
-CREATE INDEX ON invoice_items (treatment_id);
+CREATE TABLE IF NOT EXISTS `clinic`.`Invoice_items` (
+  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `unit_price` DECIMAL NULL,
+  `quantity` INT NULL,
+  `total_price` DECIMAL NULL,
+  `invoice_id` INT NULL,
+  `treatment_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `invoice_id_idx` (`invoice_id` ASC) VISIBLE,
+  INDEX `treatment_id_idx` (`treatment_id` ASC) VISIBLE,
+  CONSTRAINT `invoice_id`
+    FOREIGN KEY (`invoice_id`)
+    REFERENCES `clinic`.`invoices` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `treatment_id`
+    FOREIGN KEY (`treatment_id`)
+    REFERENCES `clinic`.`Treatments` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
