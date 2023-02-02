@@ -61,7 +61,8 @@ CREATE TABLE visits (
     vet_id integer NOT NULL,
     date_of_visit date NOT NULL,
     FOREIGN KEY (animal_id) REFERENCES animals (id),
-    FOREIGN KEY (vet_id) REFERENCES vets (id)
+    FOREIGN KEY (vet_id) REFERENCES vets (id),
+    FOREIGN KEY (email_id) REFERENCES vets (id)
 );
 
 
